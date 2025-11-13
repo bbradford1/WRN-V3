@@ -2,7 +2,7 @@
 #
 # wrn_v6.sh
 # WRN cleanup + mediaserver maintenance + safe OS log/journal + apt-lite cleanup
-#
+# Script by Bradford
 # SAFE BY DEFAULT:
 #   - fstab hardening (archive mounts only, never OS disk)
 #   - mediaserver audit + logs/cores/cache cleanup
