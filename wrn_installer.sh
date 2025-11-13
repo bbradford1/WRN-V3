@@ -5,7 +5,7 @@
 # Purpose: Download and prepare the WRN maintenance script
 
 TARGET=~/Downloads/wrn_v3.sh
-URL="https://raw.githubusercontent.com/bbradford1/WRN-V3/main/wrn_v5b.sh"
+URL="https://raw.githubusercontent.com/bbradford1/WRN-V3/main/wrn_v6.sh"
 
 echo "------------------------------------------------"
 echo "WRN Installer Script"
