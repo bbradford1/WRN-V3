@@ -104,10 +104,16 @@ NIC_GUARD_INSTALLED="no"
 NM_BOOT_FIX_INSTALLED="no"
 
 finalize() {
-  END_MB="$(free_space_mb)"
-  END_HUMAN="$(free_space_human)"
+  # Don't let any errors inside finalize kill the summary output
+  set +e
+
+  # Safely compute end metrics; fall back to start values if df fails for some reason
+  END_MB="$(free_space_mb 2>/dev/null || echo "$START_MB")"
+  END_HUMAN="$(free_space_human 2>/dev/null || echo "$START_HUMAN")"
+
   RECLAIMED=$((END_MB - START_MB))
 
+  echo
   echo "================================================"
   echo "WRN v8 COMPLETE @ $(date)"
   echo "Disk before: ${START_HUMAN}"
@@ -117,6 +123,7 @@ finalize() {
   echo "Logfile:     ${LOGFILE}"
   echo "================================================"
   print_summary
+  echo "================================================"
 }
 trap finalize EXIT
 
