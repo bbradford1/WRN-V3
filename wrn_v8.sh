@@ -3,7 +3,7 @@
 # wrn_v8.sh
 # WRN cleanup + mediaserver maintenance + safe OS log/journal + apt-lite cleanup
 # + Network stack inline refresh + NIC guard + NM post-boot refresh (all-in-one)
-#
+# Created by" Bradford
 # SAFE BY DEFAULT:
 #   - fstab hardening (only loop devices; never touches OS disk mapping)
 #   - mediaserver audit + logs/cores/cache cleanup
