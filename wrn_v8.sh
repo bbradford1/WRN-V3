@@ -27,6 +27,47 @@
 set -euo pipefail
 if [ "$EUID" -ne 0 ]; then exec sudo --preserve-env=PATH "$0" "$@"; fi
 
+#OS Check to determe if script compatable
+#---------------------------------------------------------
+# ---- OS compatibility guard (Ubuntu > 18.x only) ----
+check_os_compatibility() {
+  # Why: Prevent running on unsupported Ubuntu releases (<= 18.x)
+  # Read OS metadata
+  if [ -r /etc/os-release ]; then
+    # shellcheck disable=SC1091
+    . /etc/os-release
+  fi
+
+  # If not Ubuntu, you can choose to continue or block. We continue with a warning.
+  if [ "${ID:-}" != "ubuntu" ]; then
+    echo "[WARN] Non-Ubuntu system detected (${ID:-unknown}); continuing. Set your own policy if you want to block."
+    return 0
+  fi
+
+  ver="${VERSION_ID:-}"
+  if [ -z "$ver" ]; then
+    echo "[ERROR] Unable to detect Ubuntu version (VERSION_ID missing). Aborting for safety."
+    exit 1
+  fi
+
+  # Parse major.minor safely
+  major="${ver%%.*}"
+  minor="${ver#*.}"
+  [ "$minor" = "$ver" ] && minor=0  # handle single-number VERSION_ID (rare)
+
+  # Block Ubuntu 18.x or lower
+  if [ "${major:-0}" -le 18 ]; then
+    echo "OS not compatible: Ubuntu ${ver} detected (requires Ubuntu 19.04 or newer). Exiting."
+    exit 1
+  fi
+
+  echo "[OK] Ubuntu ${ver} detected — compatible."
+}
+
+check_os_compatibility
+# ---- end OS compatibility guard ----
+#---------------------------------------------------------
+
 usage() {
 cat <<'EOF'
 wrn_v8.sh - WRN safe maintenance stack (with NIC guard + NM boot refresh + logging)
