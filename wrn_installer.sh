@@ -13,7 +13,7 @@ set -euo pipefail
 # Repository URLs
 # ============================================================
 
-URL_MODERN="https://raw.githubusercontent.com/bbradford1/WRN-V3/main/wrn_v3.sh"
+URL_MODERN="https://raw.githubusercontent.com/bbradford1/WRN-V3/main/wrn_v9.sh"
 
 URL_LEGACY="https://raw.githubusercontent.com/bbradford1/WRN-V3/main/Legacy-WRN-Cleanup.sh"
 
